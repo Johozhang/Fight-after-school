@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>今晚打哪</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" href="css/kinerLottery.css">
+</head>
+<body>
+	<div id="box" class="box">
+	    <div class="outer KinerLottery KinerLotteryContent"><img src="./images/lanren.png"></div>
+	    <div class="inner KinerLotteryBtn start"></div>
+	</div>
+	
+	<script src="js/zepto.min.js"></script>
+      <script src="js/kinerLottery.js"></script>
+      <script>
+        var whichAward = function(deg) {
+            if ((deg > 330 && deg <= 360) || (deg > 0 && deg <= 30)) { //上单
+                return "上单，一带一路";
+            } else if ((deg > 30 && deg <= 90)) { //打野
+                return "打野，30分钟不出来";
+            } else if (deg > 90 && deg <= 150) { //辅助
+                return "你补兵，我拿头";
+            } else if (deg > 150 && deg <= 210) { //中单
+                return "中路别来，能赢";
+            } else if (deg > 210 && deg <= 270) { //adc
+                return "我人呢";
+            } else if (deg > 270 && deg <= 330) { //啦啦队
+                return "今晚，战个痛快";
+            }
+        }
+        var KinerLottery = new KinerLottery({
+            rotateNum: 8, //转盘转动圈数
+            body: "#box", //大转盘整体的选择符或zepto对象
+            direction: 0, //0为顺时针转动,1为逆时针转动
+            disabledHandler: function(key) {
+                switch (key) {
+                    case "noStart":
+                        alert("活动尚未开始");
+                        break;
+                    case "completed":
+                        alert("活动已结束");
+                        break;
+                }
+            }, 
+            clickCallback: function() {
+                function random() {
+                    return Math.floor(Math.random() * 360);
+                }
+                this.goKinerLottery(random());
+            }, 
+            KinerLotteryHandler: function(deg) {
+                    alert(whichAward(deg));
+
+                }
+        });
+    </script>
+</html>
